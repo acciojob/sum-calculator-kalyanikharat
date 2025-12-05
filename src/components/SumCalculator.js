@@ -3,21 +3,19 @@ import React, { useState, useEffect } from "react";
 export default function SumCalculator() {
   const [numbers, setNumbers] = useState([]);
   const [sum, setSum] = useState(0);
-  const [inputValue, setInputValue] = useState("");
 
+  // Recalculate sum whenever numbers change
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const total = numbers.reduce((acc, num) => acc + num, 0);
-      setSum(total);
-    }, 0);
-    return () => clearTimeout(timer);
+    const total = numbers.reduce((acc, num) => acc + num, 0);
+    setSum(total);
   }, [numbers]);
 
-  const handleAddNumber = () => {
-    const parsed = parseInt(inputValue, 10);
-    if (!isNaN(parsed)) {
-      setNumbers([...numbers, parsed]);
-      setInputValue("");
+  // Handler: update numbers array on every input change
+  const handleInputChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value)) {
+      // Add the new number to the array
+      setNumbers([...numbers, value]);
     }
   };
 
@@ -26,12 +24,9 @@ export default function SumCalculator() {
       <h1>Sum Calculator</h1>
       <input
         type="number"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={handleInputChange}
         placeholder="Enter a number"
       />
-      <button onClick={handleAddNumber}>Add Number</button>
-      {/* ✅ Fix: match Cypress expectation */}
       <p>Sum: {sum}</p>
     </div>
   );
