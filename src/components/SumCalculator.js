@@ -5,7 +5,6 @@ export default function SumCalculator() {
   const [sum, setSum] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
-  // Recalculate sum whenever numbers change
   useEffect(() => {
     const timer = setTimeout(() => {
       const total = numbers.reduce((acc, num) => acc + num, 0);
@@ -32,7 +31,8 @@ export default function SumCalculator() {
         placeholder="Enter a number"
       />
       <button onClick={handleAddNumber}>Add Number</button>
-      <p>Total Sum: {sum}</p>
+      {/* ✅ Fix: match Cypress expectation */}
+      <p>Sum: {sum}</p>
     </div>
   );
 }
